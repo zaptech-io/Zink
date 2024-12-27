@@ -10,6 +10,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <Text className="font-bold text-3xl">Welcome to Zink</Text>
       <Link href="/sign-in">
         <Text>Sign In</Text>
       </Link>
