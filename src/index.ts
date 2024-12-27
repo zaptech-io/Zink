@@ -3,12 +3,17 @@ import inquirer from "inquirer";
 import { copySync } from "fs-extra";
 import { execSync } from "child_process";
 
-import { readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 
 const program = new Command();
 
 function copyTemplate(templatePath: string, destinationPath: string) {
+  if (existsSync(destinationPath)) {
+    console.error(`Folder ${destinationPath} already exists!`);
+    process.exit(1);
+  }
+
   copySync(templatePath, destinationPath);
   console.log("Zink template files copied successfully!");
 }
@@ -51,14 +56,18 @@ program
 
     if (answers.tailwind) {
       console.log("Installing Tailwind CSS...");
-      execSync(`cd ${name} && npm install redux react-redux`, {
-        stdio: "inherit",
-      });
+      //   execSync(`cd ${name} && npm install redux react-redux`, {
+      //     stdio: "inherit",
+      //   });
     } else {
-        console.log("Skipping Tailwind CSS installation");
+      console.log("Skipping Tailwind CSS installation");
     }
 
     console.log("Project created successfully!");
+
+    console.log("To start the project, run:");
+    console.log(`cd ${name}`);
+    console.log("npx expo start");
   });
 
 program.parse();
