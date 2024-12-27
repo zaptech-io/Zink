@@ -35,8 +35,8 @@ program
     const answers = await inquirer.prompt([
       {
         type: "confirm",
-        name: "useRedux",
-        message: "Do you want to include Redux?",
+        name: "tailwind",
+        message: "Do you want to include Tailwind CSS?",
       },
     ]);
 
@@ -49,11 +49,13 @@ program
     console.log("Installing dependencies...");
     execSync(`cd ${name} && npm install`, { stdio: "inherit" });
 
-    if (answers.useRedux) {
-      console.log("Adding Redux...");
+    if (answers.tailwind) {
+      console.log("Installing Tailwind CSS...");
       execSync(`cd ${name} && npm install redux react-redux`, {
         stdio: "inherit",
       });
+    } else {
+        console.log("Skipping Tailwind CSS installation");
     }
 
     console.log("Project created successfully!");
